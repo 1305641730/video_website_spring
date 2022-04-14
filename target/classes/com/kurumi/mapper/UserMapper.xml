@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kurumi.mapper.UserMapper">
+    <select id="selectAll" resultType="user">
+        select * from tbl_user
+    </select>
+
+    <select id="selectByName" parameterType="user" resultType="user">
+        select * from tbl_user where username=#{username}
+    </select>
+
+    <select id="selectById" parameterType="int" resultType="user">
+        select * from tbl_user where id = #{id}
+    </select>
+
+    <insert id="insertUser" parameterType="user">
+        insert into tbl_user values(null, #{username}, #{password}, #{avatar}, #{intro}, #{sex}, #{email})
+    </insert>
+
+    <select id="selectOne" parameterType="user" resultType="user">
+        select * from tbl_user where username=#{username} and password=#{password}
+    </select>
+
+    <update id="updateUser" parameterType="user">
+        update tbl_user
+        <set>
+            <if test="username != null">
+                username=#{username},
+            </if>
+            <if test="password != null">
+                password=#{password},
+            </if>
+            <if test="avatar != null">
+                avatar=#{avatar},
+            </if>
+            <if test="intro != null">
+                intro=#{intro},
+            </if>
+            <if test="sex != null">
+                sex=#{sex}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

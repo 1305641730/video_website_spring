@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kurumi.mapper.CommentMapper">
+
+    <resultMap id="commentMap" type="comment">
+        <id property="id" column="cid"></id>
+        <result property="comUserId" column="comUserId"></result>
+        <result property="videoId" column="videoId"></result>
+        <result property="commentId" column="commentId"></result>
+        <result property="content" column="content"></result>
+        <result property="comDate" column="comDate"></result>
+        <result property="stars" column="stars"></result>
+        <result property="comUser.id" column="userId"></result>
+        <result property="comUser.username" column="username"></result>
+        <result property="comUser.avatar" column="avatar"></result>
+    </resultMap>
+    <select id="selectAll" resultMap="commentMap">
+        select *, c.id cid from tbl_comment c,tbl_user u where c.userId = u.id
+    </select>
+
+    <insert id="saveComment" parameterType="comment">
+        insert into tbl_comment values(null, #{comUser.id}, #{comUserId}, #{videoId}, #{commentId}, #{content}, #{comDate}, #{stars})
+    </insert>
+</mapper>

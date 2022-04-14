@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--是否显示sql语句-->
+    <!--<settings>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>-->
+    <typeAliases>
+        <typeAlias type="com.kurumi.domain.User" alias="user"></typeAlias>
+        <typeAlias type="com.kurumi.domain.Video" alias="video"></typeAlias>
+        <typeAlias type="com.kurumi.domain.VideoType" alias="videoType"></typeAlias>
+        <typeAlias type="com.kurumi.domain.Comment" alias="comment"></typeAlias>
+    </typeAliases>
+</configuration>

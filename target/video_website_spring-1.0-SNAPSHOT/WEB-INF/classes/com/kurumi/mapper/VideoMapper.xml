@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kurumi.mapper.VideoMapper">
+
+    <resultMap id="videoMap" type="video">
+        <id property="id" column="vid"></id>
+        <result property="title" column="title"></result>
+        <result property="desc" column="desc"></result>
+        <result property="uploadDate" column="uploadDate"></result>
+        <result property="stars" column="stars"></result>
+        <result property="collections" column="collections"></result>
+        <result property="videoUrl" column="videoUrl"></result>
+        <result property="videoCoverUrl" column="videoCoverUrl"></result>
+        <association property="user" javaType="user">
+            <id property="id" column="userId"></id>
+            <result property="username" column="username"></result>
+            <result property="password" column="password"></result>
+            <result property="avatar" column="avatar"/>
+        </association>
+        <association property="type" javaType="videoType">
+            <id property="id" column="typeId"></id>
+            <result property="type" column="type"></result>
+        </association>
+    </resultMap>
+    <select id="selectAll" resultMap="videoMap">
+        select *, v.id vid from tbl_video v, tbl_user u, tbl_video_type vt where v.userId = u.id and v.typeId = vt.id
+    </select>
+
+    <insert id="saveVideo" parameterType="video">
+        insert into tbl_video values(null, #{user.id}, #{title}, #{type.id}, #{desc}, #{uploadDate},#{stars}, #{collections}, #{videoUrl}, #{videoCoverUrl})
+    </insert>
+
+    <select id="selectById" parameterType="int" resultType="video">
+        select * from tbl_video where id=#{id}
+    </select>
+</mapper>
