@@ -18,6 +18,10 @@
         select *, c.id cid from tbl_comment c,tbl_user u where c.userId = u.id
     </select>
 
+    <select id="selectAllByVideoId" resultMap="commentMap" parameterType="int">
+        select *, c.id cid from tbl_comment c,tbl_user u where c.userId = u.id and  c.videoId = #{id}
+    </select>
+
     <insert id="saveComment" parameterType="comment">
         insert into tbl_comment values(null, #{comUser.id}, #{comUserId}, #{videoId}, #{commentId}, #{content}, #{comDate}, #{stars})
     </insert>
