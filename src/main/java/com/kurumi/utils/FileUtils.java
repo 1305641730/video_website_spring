@@ -17,7 +17,7 @@ public class FileUtils {
         // 获取文件在服务器的存储位置 当前：../webapp/
         String realPath = request.getSession().getServletContext().getRealPath("/");
         // realPath = realPath.replace("target\\video_website_spring-1.0-SNAPSHOT", "src" + File.separator + "main" + File.separator + "webapp");
-        System.out.println("webapp====>" + realPath);
+        // System.out.println("webapp====>" + realPath);
         String originalName = file.getOriginalFilename();
         String format = simpleDateFormat.format(new Date());
         String storagePath = realPath + storageFolder + File.separator + format;

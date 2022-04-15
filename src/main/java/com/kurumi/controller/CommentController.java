@@ -14,9 +14,10 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
-    @GetMapping
-    public ResObj saveComment() {
-        List<Comment> comments = commentService.selectAll();
+    @GetMapping("/{id}")
+    public ResObj selectAllComments(@PathVariable Integer id) {
+        List<Comment> comments = commentService.selectAllByVideoId(id);
+        System.out.println(comments);
         return new ResObj(true, "请求评论数据成功！", comments);
     }
 

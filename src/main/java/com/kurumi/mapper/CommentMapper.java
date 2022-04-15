@@ -8,5 +8,5 @@ public interface CommentMapper {
 
     int saveComment(Comment comment);
     List<Comment> selectAll();
-    List<Comment> selectAllById(Integer id);
+    List<Comment> selectAllByVideoId(Integer id);
 }

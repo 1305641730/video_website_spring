@@ -21,6 +21,12 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    public List<Comment> selectAllByVideoId(Integer id) {
+        List<Comment> comments = commentMapper.selectAllByVideoId(id);
+        return comments;
+    }
+
+    @Override
     public boolean saveComment(Comment comment) {
         return commentMapper.saveComment(comment) > 0;
     }

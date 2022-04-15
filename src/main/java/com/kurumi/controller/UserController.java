@@ -4,6 +4,7 @@ import com.kurumi.domain.User;
 import com.kurumi.service.UserService;
 import com.kurumi.utils.FileUtils;
 import com.kurumi.utils.JwtUtils;
+import com.kurumi.utils.MailUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -45,22 +46,11 @@ public class UserController {
 
     @PostMapping("/sendcode")
     public ResObj sendCode(@RequestParam String username, @RequestParam String email, HttpSession session, HttpServletRequest request) {
-        // 生成6为验证码
-        String Captcha = String.valueOf(new Random().nextInt(899999) + 100000);
-        System.out.println(username + "," + Captcha + "," + emailSender);
-        request.getSession().setAttribute(username, Captcha);
-        System.out.println("session===" + request.getSession().getAttribute(username) + ",sessionID=" + request.getSession().getId());
         try {
-            SimpleMailMessage message = new SimpleMailMessage();
-            // 发送人邮件地址
-            message.setFrom(emailSender);
-            message.setTo(email);
-            message.setSubject("验证码");
-            message.setText("接收到的验证码为：" + Captcha);
-            javaMailSender.send(message);
-            return new ResObj(true, "验证码发送成功，请注意查看邮箱！", session.getId());
+            MailUtils.generateMailCode(javaMailSender, username, email, emailSender, request);
+            return new ResObj(true, "验证码发送成功，请注意查看邮箱！", true);
         } catch (Exception e) {
-            return new ResObj(true, "验证码发送失败，请稍后再试！", e.getMessage());
+            return new ResObj(true, "验证码发送失败，请稍后再试！", false);
         }
     }
 
@@ -97,7 +87,7 @@ public class UserController {
             loginUser.setToken(token);
             loginUser.setPassword(null);
         }
-        return new ResObj(true, loginUser != null?"用户登录成功！":"用户登录失败，请重新登录！", loginUser);
+        return new ResObj(true, loginUser != null?"用户登录成功！":"该用户不存在，请注册后再登录！", loginUser);
     }
 
     @PostMapping("/validate")
